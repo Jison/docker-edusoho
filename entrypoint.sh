@@ -1,18 +1,19 @@
 #!/bin/bash
 
+#set -eo pipefail
+
 #extract edusoho
-tar zxvf -C /var/www edusoho-${EDUSOHO_VERSION}.tar.gz && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
+tar zxvf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz -C /var/www && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
 
 #specify domain for nginx vhost
+if [ -z "$DOMAIN" ]; then
+    echo >&2 'required option: -e DOMAIN="your_domain"'
+    exit 1
+fi
 sed -i "s/{{DOMAIN}}/${DOMAIN}/g" /etc/nginx/sites-enabled/edusoho.conf
 
 #init datadir if mount dir outside to /var/lib/mysql
-echo 'stopping mysql'
-/etc/init.d/mysql stop
 mysql_install_db
-
-#create empty database
-
 
 #start services
 echo 'starting nginx'
@@ -23,6 +24,27 @@ echo 'starting php5-fpm'
 /etc/init.d/php5-fpm start
 echo 'php5-fpm is running'
 
-echo 'starting nginx'
+echo 'starting mysql'
 /etc/init.d/mysql start
+mysql_root='mysql -uroot'
+# echo 'SELECT 1' | mysql_root &> /dev/null
+# if [ "$?" -ne 0 ]; then
+#     echo >&2 'mysql start failed.'
+#     exit 1
+# fi
+for i in {30..0}; do
+    if echo 'SELECT 1' | mysql_root &> /dev/null; then
+        break
+    fi
+    echo 'mysql starting...'
+    sleep 1
+done
+if [ "$i" = 0 ]; then
+    echo >&2 'mysql start failed.'
+    exit 1
+fi
 echo 'mysql is running'
+
+#create empty database
+echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | mysql_root
+echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | mysql_root
