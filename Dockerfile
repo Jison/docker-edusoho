@@ -9,13 +9,13 @@ ENV PHP_MAX_UPLOAD      1024M
 ENV PHP_MAX_POST        1024M
 
 #init
-COPY debian/jessie-sources.list /etc/apt/sources.list
+#COPY debian/jessie-sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y tzdata && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo "${TIMEZONE}" > /etc/timezone
 
 #nginx
 RUN apt-get install -y nginx
 RUN lineNum=`sed -n -e '/sendfile/=' /etc/nginx/nginx.conf`; sed -i $((lineNum+1))'i client_max_body_size 1024M;' /etc/nginx/nginx.conf
-#RUN sed -i '1i daemon off;' /etc/nginx/nginx.conf
+RUN sed -i '1i daemon off;' /etc/nginx/nginx.conf
 COPY nginx/edusoho.conf /etc/nginx/sites-enabled
 
 #php

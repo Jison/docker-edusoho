@@ -29,14 +29,6 @@ if [ !hasLock ]; then
 fi
 
 #start services
-echo 'starting nginx'
-/etc/init.d/nginx start
-echo 'nginx is running'
-
-echo 'starting php5-fpm'
-/etc/init.d/php5-fpm start >& /dev/null
-echo 'php5-fpm is running'
-
 echo "starting mysql"
 /etc/init.d/mysql start
 mysql_root='mysql -uroot'
@@ -57,18 +49,21 @@ if [ "$i" = 0 ]; then
     echo >&2 'mysql start failed.'
     exit 1
 else
-    echo 'mysql is running'
-
     if [ !hasLock ]; then
         #create empty database
+        echo 'creating edusoho database'
         echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
         echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
         echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"127.0.0.1" IDENTIFIED BY "edusoho";' | ${mysql_root}
-        echo 'create database for edusoho successfully'
     fi
-    echo '***************************'
-    echo '* welcome to use edusoho! *'
-    echo '* --- www.edusoho.com --- *'
-    echo '***************************'
 fi
 
+echo 'starting php5-fpm'
+/etc/init.d/php5-fpm start >& /dev/null
+
+echo 'starting nginx'
+echo '***************************'
+echo '* welcome to use edusoho! *'
+echo '* --- www.edusoho.com --- *'
+echo '***************************'
+nginx
