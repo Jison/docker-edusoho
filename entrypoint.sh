@@ -23,6 +23,8 @@ if [ !hasLock ]; then
     sed -i "s/{{DOMAIN}}/${DOMAIN}/g" /etc/nginx/sites-enabled/edusoho.conf
 
     #init datadir if mount dir outside to /var/lib/mysql
+    sed -i "s/user\s*=\s*debian-sys-maint/user = root/g" /etc/mysql/debian.cnf
+    sed -i "s/password\s*=\s*\w*/password = /g" /etc/mysql/debian.cnf
     mysql_install_db
 fi
 
@@ -61,11 +63,8 @@ else
         #create empty database
         echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
         echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
+        echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"127.0.0.1" IDENTIFIED BY "edusoho";' | ${mysql_root}
         echo 'create database for edusoho successfully'
-
-        mysqladmin -uroot password root
-        sed -i "s/user\s*=\s*debian-sys-maint/user = root/g" /etc/mysql/debian.cnf
-        sed -i "s/password\s*=\s*\w*/password = root/g" /etc/mysql/debian.cnf
     fi
     echo '***************************'
     echo '* welcome to use edusoho! *'
