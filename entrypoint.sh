@@ -42,9 +42,17 @@ done
 if [ "$i" = 0 ]; then
     echo >&2 'mysql start failed.'
     exit 1
-fi
-echo 'mysql is running'
+else
+    echo 'mysql is running'
+    #mysqladmin -u root password root
 
-#create empty database
-echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
-echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
+    #create empty database
+    echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
+    echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
+    echo 'create database for edusoho successfully'
+    echo '***************************'
+    echo '* welcome to use edusoho! *'
+    echo '* --- www.edusoho.com --- *'
+    echo '***************************'
+fi
+

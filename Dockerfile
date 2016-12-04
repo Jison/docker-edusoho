@@ -1,4 +1,4 @@
-FROM debian:7
+FROM debian:8.6
 
 MAINTAINER Simon Wood <wuqian@howzhi.com>
 
@@ -9,9 +9,8 @@ ENV PHP_MAX_UPLOAD      1024M
 ENV PHP_MAX_POST        1024M
 
 #init
-COPY debian/sources.list /etc/apt/sources.list
+COPY debian/jessie-sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y tzdata && cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo "${TIMEZONE}" > /etc/timezone
-RUN apt-get install -y wget
 
 #nginx
 RUN apt-get install -y nginx
@@ -32,10 +31,14 @@ RUN sed -i "s/;*listen.mode\s*=\s*0660/listen.mode = 0660/g" /etc/php5/fpm/pool.
 
 #mysql
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+sed -i "s/user\s*=\s*debian-sys-maint/user = root/g" /etc/mysql/debian.cnf
+sed -i "s/password\s*=\s*\w*/password = /g" /etc/mysql/debian.cnf
 
 #edusoho configuration
+RUN apt-get install -y wget
 RUN mkdir -p /var/www
 RUN wget -P /var/www http://download.edusoho.com/edusoho-${EDUSOHO_VERSION}.tar.gz
+RUN apt-get remove -y wget
 
 RUN apt-get -y autoremove
 RUN apt-get clean
