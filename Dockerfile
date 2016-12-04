@@ -31,8 +31,6 @@ RUN sed -i "s/;*listen.mode\s*=\s*0660/listen.mode = 0660/g" /etc/php5/fpm/pool.
 
 #mysql
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
-RUN sed -i "s/user\s*=\s*debian-sys-maint/user = root/g" /etc/mysql/debian.cnf
-RUN sed -i "s/password\s*=\s*\w*/password = /g" /etc/mysql/debian.cnf
 
 #edusoho configuration
 RUN apt-get install -y wget
