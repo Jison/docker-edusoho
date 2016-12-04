@@ -27,16 +27,16 @@ echo 'php5-fpm is running'
 echo 'starting mysql'
 /etc/init.d/mysql start
 mysql_root='mysql -uroot'
-# echo 'SELECT 1' | mysql_root &> /dev/null
+# echo 'SELECT 1' | ${mysql_root} &> /dev/null
 # if [ "$?" -ne 0 ]; then
 #     echo >&2 'mysql start failed.'
 #     exit 1
 # fi
-for i in {30..0}; do
-    if echo 'SELECT 1' | mysql_root &> /dev/null; then
+for i in {10..0}; do
+    if echo 'SELECT 1' | ${mysql_root} &> /dev/null; then
         break
     fi
-    echo 'mysql starting...'
+    echo '.'
     sleep 1
 done
 if [ "$i" = 0 ]; then
@@ -46,5 +46,5 @@ fi
 echo 'mysql is running'
 
 #create empty database
-echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | mysql_root
-echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | mysql_root
+echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
+echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
