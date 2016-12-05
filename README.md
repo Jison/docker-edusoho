@@ -42,7 +42,7 @@ visit http://{your_domain}:{host_port}
 * {host_port}: specify the http port, usually as `80`
 * {your_domain}: specify your webapp domain, like `www.edusoho.com`
 * {your_mysql_user}: specify a new mysql_user, like `esuser`
-* {your_mysql_password}: specify a new mysql_password `edusoho`
+* {your_mysql_password}: specify a new mysql_password, like `edusoho`
 * {version}: specify the edusoho version, it's optional, default `latest`
 
 ##### Example
