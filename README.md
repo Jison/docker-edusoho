@@ -36,7 +36,7 @@ docker run --name edusoho -tid --rm \
 ```
 mkdir -p /root/docker-edusoho/mysql_data && \
 rm -rf /root/docker-edusoho/mysql_data/* && \
-docker run --name edusoho --rm -ti \
+docker run --name edusoho -tid \
         -v /root/docker-edusoho/mysql_data:/var/lib/mysql \
         -p 49189:80 \
         -e DOMAIN="dest.st.edusoho.cn" \
