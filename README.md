@@ -10,12 +10,15 @@ EduSoho Dockerfile
 
 #### How to use after build
 
-###### command line
+###### run command
 
 ```
 docker run --name edusoho -tid \
         -v {host_dir_for_db}:/var/lib/mysql \
-        -p {host_port}:80 -e DOMAIN="{domain}" \
+        -p {host_port}:80 \
+        -e DOMAIN="{your_domain}" \
+        -e MYSQL_USER="{your_mysql_user}" \
+        -e MYSQL_PASSWORD="{your_mysql_password}" \
         edusoho/edusoho:{version}
 ```
 
@@ -23,5 +26,9 @@ docker run --name edusoho -tid \
 
 * {host_dir_for_db}: specify a dir in host machine to store mysql database data, like `/home/mysql_data`
 * {host_port}: specify the http port, usually as `80`
-* {domain}: specify webapp domain, like `www.edusoho.com`
+* {your_domain}: specify your webapp domain, like `www.edusoho.com`
+* {your_mysql_user}: specify a new mysql_user, like `esuser`
+* {your_mysql_password}: specify a new mysql_password `edusoho`
 * {version}: specify the edusoho version, it's optional, default `latest`
+
+###### 

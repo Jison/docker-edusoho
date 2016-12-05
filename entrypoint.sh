@@ -2,6 +2,12 @@
 
 #set -eo pipefail
 
+#check required env vars
+if [ -z "$DOMAIN" || -z "MYSQL_USER" || -z "MYSQL_PASSWORD" ]; then
+    echo >&2 'required option: -e DOMAIN="your_domain" -e MYSQL_USER="your_mysql_user" -e MYSQL_PASSWORD="your_mysql_password"'
+    exit 1
+fi
+
 hasLock=
 if [ -f "/var/www/entrypoint-executed.lock" ]; then
     hasLock=true
@@ -15,11 +21,7 @@ if [ !hasLock ]; then
     touch /var/www/entrypoint-executed.lock
 
 
-    #specify domain for nginx vhost
-    if [ -z "$DOMAIN" ]; then
-        echo >&2 'required option: -e DOMAIN="your_domain"'
-        exit 1
-    fi
+    #mofidy domain for nginx vhost
     sed -i "s/{{DOMAIN}}/${DOMAIN}/g" /etc/nginx/sites-enabled/edusoho.conf
 
     #init datadir if mount dir outside to /var/lib/mysql
