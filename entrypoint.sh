@@ -11,7 +11,7 @@ fi
 
 if [ !hasLock ]; then
     #extract edusoho
-    tar zxvf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz -C /var/www && chown -R www-data:www-data edusoho && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
+    tar zxvf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz -C /var/www && chown -R www-data:www-data /var/www/edusoho && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
     touch /var/www/entrypoint-executed.lock
 
 
