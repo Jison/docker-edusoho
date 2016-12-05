@@ -3,7 +3,7 @@
 #set -eo pipefail
 
 #check required env vars
-if [ -z "$DOMAIN" || -z "MYSQL_USER" || -z "MYSQL_PASSWORD" ]; then
+if [ -z "$DOMAIN" || -z "$MYSQL_USER" || -z "$MYSQL_PASSWORD" ]; then
     echo >&2 'required option: -e DOMAIN="your_domain" -e MYSQL_USER="your_mysql_user" -e MYSQL_PASSWORD="your_mysql_password"'
     exit 1
 fi
