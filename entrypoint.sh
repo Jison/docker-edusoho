@@ -55,9 +55,9 @@ else
         #create empty database
         echo 'creating edusoho database'
         ${mysql_root} <<-EOSQL
-            CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;
-            GRANT ALL PRIVILEGES ON `edusoho`.* TO "${MYSQL_USER}"@"localhost" IDENTIFIED BY "${MYSQL_PASSWORD}";
-            GRANT ALL PRIVILEGES ON `edusoho`.* TO "${MYSQL_USER}"@"127.0.0.1" IDENTIFIED BY "${MYSQL_PASSWORD}";
+            CREATE DATABASE IF NOT EXISTS edusoho DEFAULT CHARACTER SET utf8 ;
+            GRANT ALL PRIVILEGES ON edusoho.* TO "${MYSQL_USER}"@"localhost" IDENTIFIED BY "${MYSQL_PASSWORD}";
+            GRANT ALL PRIVILEGES ON edusoho.* TO "${MYSQL_USER}"@"127.0.0.1" IDENTIFIED BY "${MYSQL_PASSWORD}";
 
 EOSQL
     fi

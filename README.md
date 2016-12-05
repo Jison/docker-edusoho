@@ -13,7 +13,7 @@ EduSoho Dockerfile
 ###### run command
 
 ```
-docker run --name edusoho -tid \
+docker run --name edusoho -tid --rm \
         -v {host_dir_for_db}:/var/lib/mysql \
         -p {host_port}:80 \
         -e DOMAIN="{your_domain}" \
@@ -31,4 +31,18 @@ docker run --name edusoho -tid \
 * {your_mysql_password}: specify a new mysql_password `edusoho`
 * {version}: specify the edusoho version, it's optional, default `latest`
 
-###### 
+###### example
+
+```
+mkdir -p /root/docker-edusoho/mysql_data && \
+rm -rf /root/docker-edusoho/mysql_data/* && \
+docker run --name edusoho --rm -ti \
+        -v /root/docker-edusoho/mysql_data:/var/lib/mysql \
+        -p 49189:80 \
+        -e DOMAIN="dest.st.edusoho.cn" \
+        -e MYSQL_USER="esuser" \
+        -e MYSQL_PASSWORD="edusoho" \
+        edusoho/edusoho:7.2.9
+```
+
+visit http://dest.st.edusoho.cn:49189
