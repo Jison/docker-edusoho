@@ -1,16 +1,24 @@
 # docker-edusoho
 EduSoho Dockerfile
 
-#### How to build
+#### Usage
 
-1. change EDUSOHO_VERSION in Dockerfile
-2. exec `docker build -t edusoho/edusoho:{version} .`
+##### Command Lines
 
->**NOTICE**: {version} is according to EDUSOHO_VERSION
+First install docker-engine
+```
+Ubuntu: https://docs.docker.com/engine/installation/linux/ubuntulinux/
+Mac: https://docs.docker.com/engine/installation/mac/
+Windows: https://docs.docker.com/engine/installation/windows/
+```
 
-#### How to use after build
+Step.1
 
-###### run command
+```
+docker pull edusoho/edusoho
+```
+
+Step.2
 
 ```
 docker run --name edusoho -tid --rm \
@@ -22,7 +30,13 @@ docker run --name edusoho -tid --rm \
         edusoho/edusoho:{version}
 ```
 
-###### parameters
+Step.3
+
+```
+visit http://{your_domain}:{host_port}
+```
+
+##### Parameters
 
 * {host_dir_for_db}: specify a dir in host machine to store mysql database data, like `/home/mysql_data`
 * {host_port}: specify the http port, usually as `80`
@@ -31,7 +45,7 @@ docker run --name edusoho -tid --rm \
 * {your_mysql_password}: specify a new mysql_password `edusoho`
 * {version}: specify the edusoho version, it's optional, default `latest`
 
-###### example
+##### Example
 
 ```
 mkdir -p /root/docker-edusoho/mysql_data && \
@@ -42,7 +56,16 @@ docker run --name edusoho -tid \
         -e DOMAIN="dest.st.edusoho.cn" \
         -e MYSQL_USER="esuser" \
         -e MYSQL_PASSWORD="edusoho" \
-        edusoho/edusoho:7.2.9
+        edusoho/edusoho
 ```
 
 visit http://dest.st.edusoho.cn:49189
+
+#### How to build from github source
+
+Respo: https://github.com/starshiptroopers/docker-edusoho
+
+1. change EDUSOHO_VERSION in Dockerfile
+2. exec `docker build -t edusoho/edusoho:{version} .`
+
+>**NOTICE**: {version} is according to EDUSOHO_VERSION
