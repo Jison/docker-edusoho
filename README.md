@@ -21,7 +21,7 @@ docker pull edusoho/edusoho
 Step.2
 
 ```
-docker run --name edusoho -tid --rm \
+docker run --name edusoho -tid \
         -v {host_dir_for_db}:/var/lib/mysql \
         -p {host_port}:80 \
         -e DOMAIN="{your_domain}" \
