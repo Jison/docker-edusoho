@@ -3,22 +3,22 @@
 #set -eo pipefail
 
 #check required env vars
-if [ "x${DOMAIN}" == "x" || "x${MYSQL_USER}" == "x" || -z "x${MYSQL_PASSWORD}" == "x" ]; then
+if [ -z "$DOMAIN" ] || [ -z "$MYSQL_USER" ] || [-z "$MYSQL_PASSWORD" ]; then
     echo >&2 'required option: -e DOMAIN="your_domain" -e MYSQL_USER="your_mysql_user" -e MYSQL_PASSWORD="your_mysql_password"'
     exit 1
 fi
 
-hasLock=
-if [ -f "/var/www/entrypoint-executed.lock" ]; then
-    hasLock=true
+hasInitd=
+if [ -f "/var/www/entrypoint-initd.lock" ]; then
+    hasInitd=true
 else
-    hasLock=false
+    hasInitd=false
 fi
 
-if [ !hasLock ]; then
+if [ !hasInitd ]; then
     #extract edusoho
     tar zxvf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz -C /var/www && chown -R www-data:www-data /var/www/edusoho && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
-    touch /var/www/entrypoint-executed.lock
+    touch /var/www/entrypoint-initd.lock
 
 
     #mofidy domain for nginx vhost
@@ -51,12 +51,15 @@ if [ "$i" = 0 ]; then
     echo >&2 'mysql start failed.'
     exit 1
 else
-    if [ !hasLock ]; then
+    if [ !hasInitd ]; then
         #create empty database
         echo 'creating edusoho database'
-        echo 'CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;' | ${mysql_root}
-        echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"localhost" IDENTIFIED BY "edusoho";' | ${mysql_root}
-        echo 'GRANT ALL PRIVILEGES ON `edusoho`.* TO "esuser"@"127.0.0.1" IDENTIFIED BY "edusoho";' | ${mysql_root}
+        ${mysql_root} <<-EOSQL
+            CREATE DATABASE IF NOT EXISTS `edusoho` DEFAULT CHARACTER SET utf8 ;
+            GRANT ALL PRIVILEGES ON `edusoho`.* TO "${MYSQL_USER}"@"localhost" IDENTIFIED BY "${MYSQL_PASSWORD}";
+            GRANT ALL PRIVILEGES ON `edusoho`.* TO "${MYSQL_USER}"@"127.0.0.1" IDENTIFIED BY "${MYSQL_PASSWORD}";
+
+EOSQL
     fi
 fi
 
