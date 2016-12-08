@@ -21,13 +21,13 @@ docker pull edusoho/edusoho
 Step.2
 
 ```
-docker run --name edusoho -tid --rm \
+docker run --name edusoho -tid \
         -v {host_dir_for_db}:/var/lib/mysql \
         -p {host_port}:80 \
         -e DOMAIN="{your_domain}" \
         -e MYSQL_USER="{your_mysql_user}" \
         -e MYSQL_PASSWORD="{your_mysql_password}" \
-        edusoho/edusoho:{version}
+        edusoho/edusoho
 ```
 
 Step.3
@@ -38,28 +38,28 @@ visit http://{your_domain}:{host_port}
 
 ##### Parameters
 
-* {host_dir_for_db}: specify a dir in host machine to store mysql database data, like `/home/mysql_data`
+* {host_dir_for_db}: specify a dir in host machine to store mysql database data, like `/home/mysql_data/www.edusoho.com`
 * {host_port}: specify the http port, usually as `80`
 * {your_domain}: specify your webapp domain, like `www.edusoho.com`
 * {your_mysql_user}: specify a new mysql_user, like `esuser`
-* {your_mysql_password}: specify a new mysql_password `edusoho`
+* {your_mysql_password}: specify a new mysql_password, like `edusoho`
 * {version}: specify the edusoho version, it's optional, default `latest`
 
 ##### Example
 
 ```
-mkdir -p /root/docker-edusoho/mysql_data && \
-rm -rf /root/docker-edusoho/mysql_data/* && \
+mkdir -p /home/mysql_data/www.edusoho.com && \
+rm -rf /home/mysql_data/www.edusoho.com/* && \
 docker run --name edusoho -tid \
-        -v /root/docker-edusoho/mysql_data:/var/lib/mysql \
-        -p 49189:80 \
-        -e DOMAIN="dest.st.edusoho.cn" \
+        -v /home/mysql_data/www.edusoho.com:/var/lib/mysql \
+        -p 80:80 \
+        -e DOMAIN="www.edusoho.com" \
         -e MYSQL_USER="esuser" \
         -e MYSQL_PASSWORD="edusoho" \
         edusoho/edusoho
 ```
 
-visit http://dest.st.edusoho.cn:49189
+visit http://www.edusoho.com
 
 #### How to build from github source
 

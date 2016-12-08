@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y tzdata && cp /usr/share/zoneinfo/${TIME
 #nginx
 RUN apt-get install -y nginx
 RUN lineNum=`sed -n -e '/sendfile/=' /etc/nginx/nginx.conf`; sed -i $((lineNum+1))'i client_max_body_size 1024M;' /etc/nginx/nginx.conf
-RUN sed -i '1i daemon off;' /etc/nginx/nginx.conf
+RUN sed -i 'daemon off;' /etc/nginx/nginx.conf
 COPY nginx/edusoho.conf /etc/nginx/sites-enabled
 
 #php
