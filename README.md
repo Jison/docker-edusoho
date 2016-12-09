@@ -20,7 +20,7 @@ docker pull edusoho/edusoho
 
 Step.2
 
-```
+```shell
 docker run --name edusoho -tid \
         -v {host_dir_for_db}:/var/lib/mysql \
         -p {host_port}:80 \
@@ -47,7 +47,7 @@ visit http://{your_domain}:{host_port}
 
 ##### Example
 
-```
+```shell
 mkdir -p /home/mysql_data/www.edusoho.com && \
 rm -rf /home/mysql_data/www.edusoho.com/* && \
 docker run --name edusoho -tid \
