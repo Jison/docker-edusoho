@@ -23,7 +23,6 @@ Step.2
 ```shell
 docker run --name edusoho -tid \
         -v {host_dir_for_db}:/var/lib/mysql \
-        -v {host_dir_for_db}:/var/lib/mysql \
         -v {host_dir_for_edusoho_code}:/var/www/edusoho \
         -p {host_port}:80 \
         -e DOMAIN="{your_domain}" \
@@ -46,11 +45,11 @@ visit http://{your_domain}:{host_port}
 * {your_domain}: specify your webapp domain, like `www.edusoho.com`
 * {your_mysql_user}: specify a new mysql_user, like `esuser`
 * {your_mysql_password}: specify a new mysql_password, like `edusoho`
-* {version}: specify the edusoho version, it's optional, default `latest`
 
 ##### Example
 
 ```shell
+mkdir -p /home/www/www.edusoho.com && \
 mkdir -p /home/mysql_data/www.edusoho.com && \
 rm -rf /home/mysql_data/www.edusoho.com/* && \
 docker run --name edusoho -tid \
