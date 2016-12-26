@@ -62,6 +62,19 @@ docker run --name edusoho -tid \
         edusoho/edusoho
 ```
 
+```shell
+mkdir -p /var/www/t5.edusoho.cn && \
+mkdir -p /var/mysql/t5.edusoho.cn && \
+docker run --name t5.edusoho.cn -tid \
+        -v /var/mysql/t5.edusoho.cn:/var/lib/mysql \
+        -v /var/www/t5.edusoho.cn:/var/www/edusoho \
+        -p 6888:80 \
+        -e DOMAIN="t5.edusoho.cn" \
+        -e MYSQL_USER="esuser" \
+        -e MYSQL_PASSWORD="edusoho" \
+        edusoho/edusoho
+```
+
 visit http://www.edusoho.com
 
 #### How to build from github source
