@@ -9,7 +9,7 @@ if [ -z "$DOMAIN" ] || [ -z "$MYSQL_USER" ] || [ -z "$MYSQL_PASSWORD" ]; then
 fi
 
 hasInitd=
-if [ -f "/var/www/entrypoint-initd.lock" ]; then
+if [ -f "/.entrypoint-initd.lock" ]; then
     hasInitd=true
 else
     hasInitd=false
@@ -18,7 +18,7 @@ fi
 if [ !hasInitd ]; then
     #extract edusoho
     tar zxvf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz -C /var/www && chown -R www-data:www-data /var/www/edusoho && rm -rf /var/www/edusoho-${EDUSOHO_VERSION}.tar.gz
-    touch /var/www/entrypoint-initd.lock
+    touch /.entrypoint-initd.lock
 
 
     #mofidy domain for nginx vhost
