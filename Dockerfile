@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install -y tzdata \
     && sed -i "s/;*listen.owner\s*=\s*www-data/listen.owner = www-data/g" /etc/php5/fpm/pool.d/www.conf \
     && sed -i "s/;*listen.group\s*=\s*www-data/listen.group = www-data/g" /etc/php5/fpm/pool.d/www.conf \
     && sed -i "s/;*listen\s*=\s*\S*/listen = 127.0.0.1:9000/g" /etc/php5/fpm/pool.d/www.conf \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server \
     && apt-get install -y wget \
     && mkdir -p /var/www \
     && wget -P /var/www http://download.edusoho.com/edusoho-${EDUSOHO_VERSION}.tar.gz \
