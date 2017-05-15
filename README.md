@@ -26,8 +26,6 @@ docker run --name edusoho -tid \
         -v {host_dir_for_edusoho_code}:/var/www/edusoho \
         -p {host_port}:80 \
         -e DOMAIN="{your_domain}" \
-        -e MYSQL_USER="{your_mysql_user}" \
-        -e MYSQL_PASSWORD="{your_mysql_password}" \
         edusoho/edusoho
 ```
 
@@ -57,8 +55,6 @@ docker run --name edusoho -tid \
         -v /home/www/www.edusoho.com:/var/www/edusoho \
         -p 80:80 \
         -e DOMAIN="www.edusoho.com" \
-        -e MYSQL_USER="esuser" \
-        -e MYSQL_PASSWORD="edusoho" \
         edusoho/edusoho
 ```
 
@@ -70,8 +66,6 @@ docker run --name t5.edusoho.cn -tid \
         -v /var/www/t5.edusoho.cn:/var/www/edusoho \
         -p 6888:80 \
         -e DOMAIN="t5.edusoho.cn" \
-        -e MYSQL_USER="esuser" \
-        -e MYSQL_PASSWORD="edusoho" \
         edusoho/edusoho
 ```
 
